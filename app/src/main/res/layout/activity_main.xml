@@ -21,14 +21,16 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/ButtonTrue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/value_true"/>
+            android:text="@string/button_true" />
 
         <Button
+            android:id="@+id/ButtonFalse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/value_false"/>
+            android:text="@string/button_false" />
 
     </LinearLayout>
 
