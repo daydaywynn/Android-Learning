@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">GeoQuiz</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="value_true">True</string>
+    <string name="value_false">False</string>
+    <string name="value_hello">Sup everybody</string>
 </resources>
