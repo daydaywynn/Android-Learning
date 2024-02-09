@@ -4,4 +4,7 @@
     <string name="button_true">True</string>
     <string name="button_false">False</string>
     <string name="value_hello">Sup everybody</string>
+
+    <string name="toast_true">True!</string>
+    <string name="toast_false">False!</string>
 </resources>
