@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity(){
 
@@ -24,11 +25,11 @@ class MainActivity : AppCompatActivity(){
 
         //Set listeners inside of the onCreate
         trueButton.setOnClickListener{view : View -> //'view' is the button that its listening to!
-            Toast.makeText(
-                this,
-                R.string.toast_true,
-                Toast.LENGTH_LONG
-            ).show()
+            /*
+            * Snackbars and Toasts can be used to do the same thing, but snackbars have a bit more functionality.
+            * This is important to keep in mind
+            * */
+            Snackbar.make(view,R.string.toast_true, Snackbar.LENGTH_LONG).show() //Snackbar!
             println(view.id.toString())
             println(R.id.ButtonTrue)
         }
@@ -38,7 +39,7 @@ class MainActivity : AppCompatActivity(){
                 this,
                 R.string.toast_false,
                 Toast.LENGTH_LONG
-            ).show()
+            ).show() //Toast
         }
     }
 
