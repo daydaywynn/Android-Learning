@@ -3,8 +3,15 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="button_true">True</string>
     <string name="button_false">False</string>
-    <string name="value_hello">Sup everybody</string>
+    <string name="button_next">Next</string>
+
 
     <string name="toast_true">True!</string>
     <string name="toast_false">False!</string>
+
+
+    <string name="first_question">I am 28 years old</string>
+    <string name="second_question">I am from Texas</string>
+    <string name="third_question"> I am married, currently</string>
+    <string name="fourth_question"> I like ratchet hoes</string>
 </resources>

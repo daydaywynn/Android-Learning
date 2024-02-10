@@ -4,6 +4,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -13,7 +14,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="24dp"
-        android:text="@string/value_hello"
+        tools:text="@string/first_question"
+        android:id="@+id/QuestionsTextView"
+        android:layout_gravity="center"
         />
     <LinearLayout
         android:layout_width="wrap_content"
@@ -32,7 +35,14 @@
             android:layout_height="wrap_content"
             android:text="@string/button_false" />
 
+
     </LinearLayout>
+
+    <Button
+        android:id="@+id/ButtonNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_next" />
 
 
 </LinearLayout>
