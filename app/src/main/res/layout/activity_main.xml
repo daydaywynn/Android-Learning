@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!--Will be as big as its content-->
     <!--Will have horizontal orientation-->
@@ -42,7 +43,16 @@
         android:id="@+id/ButtonNext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_next" />
+        app:icon="@drawable/arrow_right"
+        android:text="@string/button_next"
+        app:iconGravity="end"/>
+    <Button
+        android:id="@+id/ButtonPrev"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:icon="@drawable/arrow_left"
+        android:text="@string/button_prev"
+        app:iconGravity="start"/>
 
 
 </LinearLayout>

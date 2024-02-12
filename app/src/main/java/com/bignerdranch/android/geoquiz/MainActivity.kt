@@ -2,12 +2,14 @@ package com.bignerdranch.android.geoquiz
 
 import Question
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bignerdranch.android.geoquiz.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 
+private const val TAG : String = "MainActivity"
 class MainActivity : AppCompatActivity(){
 
     //lateinit tells compiler you'll store something in the property later
@@ -22,6 +24,8 @@ class MainActivity : AppCompatActivity(){
     private var curIndex = 0
     override fun onCreate(savedInstanceState : Bundle?){
         super.onCreate(savedInstanceState)
+
+        Log.d(TAG, "OnCreate(Bundle?) called")
         // Not necessary when binding is set --> setContentView(R.layout.activity_main) //sets the layout file
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -66,18 +70,57 @@ class MainActivity : AppCompatActivity(){
         }
 
         binding.QuestionsTextView.setOnClickListener { view: View->
-            updateQuestion()
+            updateQuestion('+')
         }
 
         binding.ButtonNext.setOnClickListener{view : View ->
-            updateQuestion()
+            updateQuestion('+')
+        }
+
+        binding.ButtonPrev.setOnClickListener{view : View ->
+            updateQuestion('-')
+
         }
 
     }
+    override fun onStart(){
+        super.onStart()
+        Log.d(TAG, "onStart() called")
+    }
 
-    private fun updateQuestion(){
-        curIndex  = (curIndex + 1) % questionBank.size
-        binding.QuestionsTextView.setText(questionBank[curIndex].textResId)
+    override fun onResume(){
+        super.onResume()
+        Log.d(TAG, "onResume Called")
+    }
+
+    override fun onPause(){
+        super.onPause()
+        Log.d(TAG, "onPause called")
+    }
+
+    override fun onStop(){
+        super.onStop()
+        Log.d(TAG, "onStop called")
+    }
+
+    override fun onDestroy(){
+        super.onDestroy()
+        Log.d(TAG, "onDestroy called")
+    }
+    private fun updateQuestion(direction : Char){
+        if(direction.equals('+')) {
+            curIndex = (curIndex + 1) % questionBank.size
+            binding.QuestionsTextView.setText(questionBank[curIndex].textResId)
+        }
+        else{
+            if(curIndex.equals(0)){
+                curIndex = questionBank.size-1
+            }
+            else{
+                curIndex = (curIndex - 1) % questionBank.size
+            }
+            binding.QuestionsTextView.setText(questionBank[curIndex].textResId)
+        }
     }
 
 

@@ -4,6 +4,7 @@
     <string name="button_true">True</string>
     <string name="button_false">False</string>
     <string name="button_next">Next</string>
+    <string name="button_prev">Previous</string>
 
 
     <string name="toast_true">This is the right answer!</string>
