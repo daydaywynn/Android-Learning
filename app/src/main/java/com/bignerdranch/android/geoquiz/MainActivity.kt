@@ -9,6 +9,13 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bignerdranch.android.geoquiz.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 
+/**
+ * Log modes: Error, Warning, Info, Debug
+ * Log.e(..) for Errors
+ * Log.w(..) for Warnings
+ * Log.i(..) for Info
+ * Log.d(..) for Debugs
+ */
 private const val TAG : String = "MainActivity"
 class MainActivity : AppCompatActivity(){
 
