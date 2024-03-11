@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bignerdranch.android.geoquiz.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity(){
 
     //lateinit tells compiler you'll store something in the property later
     private lateinit var binding: ActivityMainBinding //From the binding being imported earlier
-
+    private  val quizViewModel : QuizViewModel by viewModels() //Associating the activity with a ViewModel
     private val questionBank = listOf(
         Question(R.string.first_question, true),
         Question(R.string.second_question, true),
@@ -41,7 +42,7 @@ class MainActivity : AppCompatActivity(){
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.QuestionsTextView.setText(questionBank[curIndex].textResId) //to get the id of the string and set the string as the text for TextView
-
+        Log.d(TAG, "Got a view model $quizViewModel")
 
 
         //Set listeners inside of the onCreate
