@@ -1,6 +1,5 @@
 package com.bignerdranch.android.geoquiz
 
-import Question
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -24,16 +23,7 @@ class MainActivity : AppCompatActivity(){
     //lateinit tells compiler you'll store something in the property later
     private lateinit var binding: ActivityMainBinding //From the binding being imported earlier
     private  val quizViewModel : QuizViewModel by viewModels() //Associating the activity with a ViewModel
-    private val questionBank = listOf(
-        Question(R.string.first_question, true),
-        Question(R.string.second_question, true),
-        Question(R.string.third_question, false),
-        Question(R.string.fourth_question, false)
-    )
-    private var curIndex = 0
-    private var answerArray : Array<Boolean?> = arrayOfNulls(questionBank.size)
-    private var answeredQuestions = 0
-    private var rightAnswers = 0
+
     override fun onCreate(savedInstanceState : Bundle?){
         super.onCreate(savedInstanceState)
 
@@ -41,7 +31,7 @@ class MainActivity : AppCompatActivity(){
         // Not necessary when binding is set --> setContentView(R.layout.activity_main) //sets the layout file
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.QuestionsTextView.setText(questionBank[curIndex].textResId) //to get the id of the string and set the string as the text for TextView
+        binding.QuestionsTextView.setText(quizViewModel.currentQuestionText) //to get the id of the string and set the string as the text for TextView
         Log.d(TAG, "Got a view model $quizViewModel")
 
 
@@ -51,7 +41,7 @@ class MainActivity : AppCompatActivity(){
             * Snackbars and Toasts can be used to do the same thing, but snackbars have a bit more functionality.
             * This is important to keep in mind
             * */
-            if(!questionBank[curIndex].checkAnswer(true)){
+            if(!checkAnswer(true)){
                 Snackbar.make(
                     view,
                     R.string.toast_false,
@@ -65,15 +55,15 @@ class MainActivity : AppCompatActivity(){
                     Snackbar.LENGTH_LONG
                 ).show() //Toast
             }
-            answerArray[curIndex] = true
+            quizViewModel.storeAnswer(true)
             binding.ButtonTrue.isClickable = false
             binding.ButtonFalse.isClickable = true
-            answeredQuestions++
+            quizViewModel.increaseAnsweredCount()
             checkIfFinished(view)
         }
 
         binding.ButtonFalse.setOnClickListener{view : View ->
-            if(!questionBank[curIndex].checkAnswer(false)){
+            if(!checkAnswer(false)){
                 Snackbar.make(
                     view,
                     R.string.toast_false,
@@ -91,8 +81,8 @@ class MainActivity : AppCompatActivity(){
             binding.ButtonTrue.isClickable = true
 
             answeredQuestion()
-            answerArray[curIndex] = false
-            answeredQuestions++
+            quizViewModel.storeAnswer(false)
+            quizViewModel.increaseAnsweredCount()
             checkIfFinished(view)
         }
 
@@ -112,10 +102,10 @@ class MainActivity : AppCompatActivity(){
     }
 
     private fun checkIfFinished(view: View) {
-        if (answeredQuestions.equals(questionBank.size)) {
+        if (quizViewModel.getAnsweredQuestions().equals(quizViewModel.getQuestionBank().size)) {
             Snackbar.make(
                 view,
-                "Your score is ${(rightAnswers / questionBank.size).toDouble()}%",
+                "Your score is ${(quizViewModel.getRightAnswers() / quizViewModel.getQuestionBank().size).toDouble()}%",
                 Snackbar.LENGTH_LONG
             ).show()
             resetAll()
@@ -152,21 +142,16 @@ class MainActivity : AppCompatActivity(){
 
     private fun updateQuestion(direction : Char){
         if(direction.equals('+')) {
-            curIndex = (curIndex + 1) % questionBank.size
-            binding.QuestionsTextView.setText(questionBank[curIndex].textResId)
+            quizViewModel.moveToNext()
+            binding.QuestionsTextView.setText(quizViewModel.currentQuestionText)
         }
         else{
-            if(curIndex.equals(0)){
-                curIndex = questionBank.size-1
-            }
-            else{
-                curIndex = (curIndex - 1) % questionBank.size
-            }
-            binding.QuestionsTextView.setText(questionBank[curIndex].textResId)
+            quizViewModel.moveBackwards()
+            binding.QuestionsTextView.setText(quizViewModel.currentQuestionText)
 
         }
         resetButtons()
-        if(answerArray[curIndex] != null){ //question has an answer
+        if(quizViewModel.answerArray[quizViewModel.getCurIndex()] != null){ //question has an answer
             answeredQuestion()
             binding.ButtonTrue.isClickable = false
             binding.ButtonFalse.isClickable = false
@@ -187,11 +172,12 @@ class MainActivity : AppCompatActivity(){
 
     private fun resetAll(){
         resetButtons()
-        answeredQuestions = 0
-        rightAnswers = 0
-        curIndex = 0
-        binding.QuestionsTextView.setText(questionBank[curIndex].textResId)
-        answerArray = arrayOfNulls(questionBank.size)
+        quizViewModel.reset()
+        binding.QuestionsTextView.setText(quizViewModel.currentQuestionText)
+    }
+
+    private fun checkAnswer(ans : Boolean) : Boolean{
+        return quizViewModel.currentQuestionAnswer.equals(ans)
     }
 
 
